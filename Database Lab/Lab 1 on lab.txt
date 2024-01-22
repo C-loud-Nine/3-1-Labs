@@ -1,0 +1,351 @@
+
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Jan 16 08:30:16 2024
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect system
+Enter password:
+Connected.
+SQL> create user ss2 identified by 1234
+  2  ;
+
+User created.
+
+SQL> grant all privileges to ss2;
+
+Grant succeeded.
+
+SQL> disconnect
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+SQL> connect ss2
+Enter password:
+Connected.
+SQL> show user
+USER is "SS2"
+SQL> grant create session to ss2
+  2  ;
+
+Grant succeeded.
+
+SQL> revoke create sesssion from ss2;
+revoke create sesssion from ss2
+       *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> create role head;
+
+Role created.
+
+SQL> grant create table,create session to role;
+grant create table,create session to role
+                                     *
+ERROR at line 1:
+ORA-01917: user or role 'ROLE' does not exist
+
+
+SQL> grant create table,create session to head;
+
+Grant succeeded.
+
+SQL> grant head to ss2
+  2  ;
+
+Grant succeeded.
+
+SQL> disconnect
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+SQL>
+
+
+
+NEW:::::::Table ////////////////////////////////////////
+
+SQL> connect / as sysdba;
+Connected.
+SQL> alter user system by 123
+  2  ;
+alter user system by 123
+                  *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> alter user system by 1234
+  2  ;
+alter user system by 1234
+                  *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL>  alter user system by 12345
+  2  ;
+ alter user system by 12345
+                   *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> alter user system by 1234;
+alter user system by 1234
+                  *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> alter user system identified by 1234;
+
+User altered.
+
+SQL> disconnect
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+SQL> connect system
+Enter password:
+Connected.
+SQL> show page size
+SP2-0158: unknown SHOW option "page"
+SP2-0158: unknown SHOW option "size"
+SQL> show pagesize
+pagesize 14
+SQL> connect ss2
+Enter password:
+Connected.
+SQL> drop table text
+  2  ;
+drop table text
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select table from user_tables;
+select table from user_tables
+       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select table_name from user_tables;
+
+no rows selected
+
+SQL> drop table text;
+drop table text
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> drop table test;
+drop table test
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select table from user_tables;
+select table from user_tables
+       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select table_name from user_tables;
+
+no rows selected
+
+SQL> drop table test;
+drop table test
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table test(
+  2  name varchar2(30)
+  3  roll integer
+  4  cg number(3,2));
+roll integer
+*
+ERROR at line 3:
+ORA-00907: missing right parenthesis
+
+
+SQL>
+SQL> SQL> create table test(
+SP2-0734: unknown command beginning "SQL> creat..." - rest of line ignored.
+SQL>   2  name varchar2(30)
+SQL>   3  roll integer
+SQL>   4  cg number(3,2));
+SQL>  create table test(
+  2    2  name varchar2(30)
+  3    3  roll integer
+  4    3  roll integer
+  5  ;
+  2  name varchar2(30)
+  *
+ERROR at line 2:
+ORA-00904: : invalid identifier
+
+
+SQL>  create table test(
+  2  name varchar2(30),
+  3  roll integer,
+  4  cg number(3,2));
+
+Table created.
+
+SQL> describe test;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(30)
+ ROLL                                               NUMBER(38)
+ CG                                                 NUMBER(3,2)
+
+SQL> create table ap(
+  2  name varchar2(20) not null,
+  3  roll integer);
+
+Table created.
+
+SQL> describe ap;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                      NOT NULL VARCHAR2(20)
+ ROLL                                               NUMBER(38)
+
+SQL>
+
+
+sakib sir link : https://a30302d7c4cebcbba8.gradio.live/
+
+
+
+
+///////////////////////////Home practice////////////////////////
+
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Jan 20 22:41:02 2024
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect system
+Enter password:
+Connected.
+SQL> creat user shafi identified by 1234
+SP2-0734: unknown command beginning "creat user..." - rest of line ignored.
+SQL> create user shafi identified by 1234
+  2  ;
+
+User created.
+
+SQL> show user
+USER is "SYSTEM"
+SQL> grant all privileges to shafi;
+
+Grant succeeded.
+
+SQL> disconnect
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+SQL> connect shafi
+Enter password:
+Connected.
+SQL> show user
+USER is "SHAFI"
+SQL> create table ab(
+  2  name varchar2(20)
+  3
+SQL> create table ab(
+  2  name varchar2(20),
+  3  roll integer,
+  4  cg number(3,2));
+
+Table created.
+
+SQL> describe ab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ ROLL                                               NUMBER(38)
+ CG                                                 NUMBER(3,2)
+
+SQL> alter table ab add floor char(15);
+
+Table altered.
+
+SQL> describe table
+ERROR:
+ORA-00931: missing identifier
+
+
+SQL> describe ab
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ ROLL                                               NUMBER(38)
+ CG                                                 NUMBER(3,2)
+ FLOOR                                              CHAR(15)
+
+SQL> alter table ab rename column cg to cgpa
+  2  ;
+
+Table altered.
+
+SQL> describe ab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ ROLL                                               NUMBER(38)
+ CGPA                                               NUMBER(3,2)
+ FLOOR                                              CHAR(15)
+
+SQL> alter table ab drop column floor;
+
+Table altered.
+
+SQL> describe table;
+ERROR:
+ORA-00931: missing identifier
+
+
+SQL> describe ab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ ROLL                                               NUMBER(38)
+ CGPA                                               NUMBER(3,2)
+
+SQL> alter table ab add date;
+alter table ab add date
+                   *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> alter table ab add dd date;
+
+Table altered.
+
+SQL> describe ab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ ROLL                                               NUMBER(38)
+ CGPA                                               NUMBER(3,2)
+ DD                                                 DATE
+
+SQL> show pagesize
+pagesize 14
+SQL> show linesize
+linesize 80
+SQL>
+
