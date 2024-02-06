@@ -1,0 +1,240 @@
+create table Book_information(book_id number(3),book_title varchar(50),author varchar(30),genre varchar(10),price number(4),primary key(book_id));
+
+create table Sales(book_id number(3),sales_id number(3),customer_id number(3),price number(4),primary key(sales_id),foreign key(book_id) references Book_information(book_id));
+
+insert into Book_information values (101,'Norwegian Wood','Haruki Murakami','Y/A',1200);
+INSERT INTO Book_information VALUES (102, 'Kafka on the Shore', 'Haruki Murakami', 'Fiction', 1350);
+INSERT INTO Book_information VALUES (103, 'To Kill a Mockingbird', 'Harper Lee', 'Classic', 1100);
+INSERT INTO Book_information VALUES (104, 'The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 1250);
+INSERT INTO Book_information VALUES (105, 'The Hunger Games', 'Suzanne Collins', 'Dystopian', 1050);
+
+
+insert into sales values(101,01,401,1200);
+insert into sales values(101,02,402,1200);
+insert into sales values(102,03,401,1350);
+insert into sales values(103,04,403,1100);
+insert into sales values(105,05,404,1050);
+insert into sales values(103,06,405,1100);
+
+
+command task:
+
+select * from book_information natural join sales;
+
+select book_id,author from book_information left outer join sales using (book_id);
+
+select book_id,author from book_information right outer join sales using (book_id);
+
+select book_id,author from book_information full outer join sales using (book_id);
+
+SELECT book_information.book_id, book_information.author FROM book_information LEFT OUTER JOIN sales ON sales.book_id = book_information.book_id;
+
+
+
+
+                            
+
+
+
+                           //////////////////////////////////////////////////////////                  CONSOLE LOGS           //////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Feb 6 09:05:04 2024
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect system
+Enter password:
+Connected.
+SQL> disconnect system
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+SQL> connect pikachu
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect pikachu
+Enter password:
+Connected.
+SQL> set pagesize 100set linesize 200
+SP2-0268: pagesize option not a valid number
+SQL> set pagesize 100
+SQL> set linesize 200
+SQL> create table Book_information(book_id number(3),book_title varchar(50),author varchar(30),genre varchar(10),price number(4),primary key(book_id));
+
+Table created.
+
+SQL> create table Sales(book_id number(3),sales_id number(3),customer_id number(3),price number(4),primary key(sales_id),foreign key(book_id) references Book_information(book_id));
+
+Table created.
+
+SQL> insert into Book_information values (101,'Norwegian Wood','Haruki Murakami','Y/A',1200);
+
+1 row created.
+
+SQL> INSERT INTO Book_information VALUES (102, 'Kafka on the Shore', 'Haruki Murakami', 'Fiction', 1350);
+
+1 row created.
+
+SQL> INSERT INTO Book_information VALUES (103, 'To Kill a Mockingbird', 'Harper Lee', 'Classic', 1100);
+
+1 row created.
+
+SQL> INSERT INTO Book_information VALUES (104, 'The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 1250);
+
+1 row created.
+
+SQL> INSERT INTO Book_information VALUES (105, 'The Hunger Games', 'Suzanne Collins', 'Dystopian', 1050);
+
+1 row created.
+
+SQL> insert into sales values(101,01,401,1200);
+
+1 row created.
+
+SQL> insert into sales values(101,02,402,1200);
+
+1 row created.
+
+SQL> insert into sales values(102,03,401,1350);
+
+1 row created.
+
+SQL> insert into sales values(103,04,403,1100);
+
+1 row created.
+
+SQL> insert into sales values(105,05,404,1050);
+
+1 row created.
+
+SQL> insert into sales values(103,06,405,1100);
+
+1 row created.
+
+SQL> show * from book_information;
+SP2-0158: unknown SHOW option "*"
+SP2-0158: unknown SHOW option "from"
+SP2-0735: unknown SHOW option beginning "book_infor..."
+SQL> elect * from book_information;
+SP2-0734: unknown command beginning "elect * fr..." - rest of line ignored.
+SQL> select * from book_information;
+
+   BOOK_ID BOOK_TITLE                                         AUTHOR                         GENRE           PRICE
+---------- -------------------------------------------------- ------------------------------ ---------- ----------
+       101 Norwegian Wood                                     Haruki Murakami                Y/A              1200
+       102 Kafka on the Shore                                 Haruki Murakami                Fiction          1350
+       103 To Kill a Mockingbird                              Harper Lee                     Classic          1100
+       104 The Great Gatsby                                   F. Scott Fitzgerald            Classic          1250
+       105 The Hunger Games                                   Suzanne Collins                Dystopian        1050
+
+SQL> select * from sales;
+
+   BOOK_ID   SALES_ID CUSTOMER_ID      PRICE
+---------- ---------- ----------- ----------
+       101          1         401       1200
+       101          2         402       1200
+       102          3         401       1350
+       103          4         403       1100
+       105          5         404       1050
+       103          6         405       1100
+
+6 rows selected.
+
+SQL> select * from book_information natural join sales;
+
+   BOOK_ID      PRICE BOOK_TITLE                                         AUTHOR                         GENRE        SALES_ID CUSTOMER_ID
+---------- ---------- -------------------------------------------------- ------------------------------ ---------- ---------- -----------
+       101       1200 Norwegian Wood                                     Haruki Murakami                Y/A                 1         401
+       101       1200 Norwegian Wood                                     Haruki Murakami                Y/A                 2         402
+       102       1350 Kafka on the Shore                                 Haruki Murakami                Fiction             3         401
+       103       1100 To Kill a Mockingbird                              Harper Lee                     Classic             4         403
+       105       1050 The Hunger Games                                   Suzanne Collins                Dystopian           5         404
+       103       1100 To Kill a Mockingbird                              Harper Lee                     Classic             6         405
+
+6 rows selected.
+
+SQL> select * from book_information natural join sales where book_id=103;
+
+   BOOK_ID      PRICE BOOK_TITLE                                         AUTHOR                         GENRE        SALES_ID CUSTOMER_ID
+---------- ---------- -------------------------------------------------- ------------------------------ ---------- ---------- -----------
+       103       1100 To Kill a Mockingbird                              Harper Lee                     Classic             4         403
+       103       1100 To Kill a Mockingbird                              Harper Lee                     Classic             6         405
+
+SQL> select book_title,author from book_information join sales using (book_id);
+
+BOOK_TITLE                                         AUTHOR
+-------------------------------------------------- ------------------------------
+Norwegian Wood                                     Haruki Murakami
+Norwegian Wood                                     Haruki Murakami
+Kafka on the Shore                                 Haruki Murakami
+To Kill a Mockingbird                              Harper Lee
+The Hunger Games                                   Suzanne Collins
+To Kill a Mockingbird                              Harper Lee
+
+6 rows selected.
+
+SQL> select book_id,book_title,author from book_information left outer join sales using (book_id);
+
+   BOOK_ID BOOK_TITLE                                         AUTHOR
+---------- -------------------------------------------------- ------------------------------
+       101 Norwegian Wood                                     Haruki Murakami
+       101 Norwegian Wood                                     Haruki Murakami
+       102 Kafka on the Shore                                 Haruki Murakami
+       103 To Kill a Mockingbird                              Harper Lee
+       105 The Hunger Games                                   Suzanne Collins
+       103 To Kill a Mockingbird                              Harper Lee
+       104 The Great Gatsby                                   F. Scott Fitzgerald
+
+7 rows selected.
+
+SQL> select book_id,book_title,author from book_information right outer join sales using (book_id);
+
+   BOOK_ID BOOK_TITLE                                         AUTHOR
+---------- -------------------------------------------------- ------------------------------
+       101 Norwegian Wood                                     Haruki Murakami
+       101 Norwegian Wood                                     Haruki Murakami
+       102 Kafka on the Shore                                 Haruki Murakami
+       103 To Kill a Mockingbird                              Harper Lee
+       103 To Kill a Mockingbird                              Harper Lee
+       105 The Hunger Games                                   Suzanne Collins
+
+6 rows selected.
+
+SQL> select book_id,book_title,author from book_information full outer join sales using (book_id);
+
+   BOOK_ID BOOK_TITLE                                         AUTHOR
+---------- -------------------------------------------------- ------------------------------
+       101 Norwegian Wood                                     Haruki Murakami
+       101 Norwegian Wood                                     Haruki Murakami
+       102 Kafka on the Shore                                 Haruki Murakami
+       103 To Kill a Mockingbird                              Harper Lee
+       105 The Hunger Games                                   Suzanne Collins
+       103 To Kill a Mockingbird                              Harper Lee
+       104 The Great Gatsby                                   F. Scott Fitzgerald
+
+7 rows selected.
+
+SQL> SELECT book_information.book_id, book_information.author FROM book_information LEFT OUTER JOIN sales ON sales.book_id = book_information.book_id;
+
+   BOOK_ID AUTHOR
+---------- ------------------------------
+       101 Haruki Murakami
+       101 Haruki Murakami
+       102 Haruki Murakami
+       103 Harper Lee
+       105 Suzanne Collins
+       103 Harper Lee
+       104 F. Scott Fitzgerald
+
+7 rows selected.
+
+SQL>
