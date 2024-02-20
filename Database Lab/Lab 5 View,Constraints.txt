@@ -1,0 +1,75 @@
+1\\\
+
+create table Book_information(book_id number(3),book_title varchar(50),author varchar(30),genre varchar(10),price number(4),primary key(book_id));
+create table Sales(book_id number(3),sales_id number(3),customer_id number(3),price number(4),primary key(sales_id),foreign key(book_id) references Book_information(book_id));
+
+insert into Book_information values (101,'Norwegian Wood','Haruki Murakami','Y/A',1200);
+INSERT INTO Book_information VALUES (102, 'Kafka on the Shore', 'Haruki Murakami', 'Fiction', 1350);
+INSERT INTO Book_information VALUES (103, 'To Kill a Mockingbird', 'Harper Lee', 'Classic', 1100);
+INSERT INTO Book_information VALUES (104, 'The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 1250);
+INSERT INTO Book_information VALUES (105, 'The Hunger Games', 'Suzanne Collins', 'Dystopian', 1050);
+
+2\\\\
+
+select * from Book_information;
+
+3\\\\\\
+
+insert into sales values(101,01,401,1200);
+insert into sales values(101,02,402,1200);
+insert into sales values(102,03,401,1350);
+insert into sales values(103,04,403,1100);
+insert into sales values(105,05,404,1050);
+insert into sales values(103,06,405,1100);
+select * from sales;
+
+4\\\\\
+
+
+create view sales_info as select sales_id,book_id,price from sales;
+
+create view book_info as select book_id,genre,author from Book_information;
+
+
+
+5\\\\\\\
+
+
+select * from sales_info;
+select * from book_info;
+
+
+6\\\\\\\ new table with constraints
+
+
+create table Book_information1(book_id number(3) check (book_id>=100),book_title varchar(50),author varchar(30),genre varchar(10),price number(4) check (price>=800),primary key(book_id));
+
+insert into Book_information1 values (101,'Norwegian Wood','Haruki Murakami','Y/A',1200);
+INSERT INTO Book_information1 VALUES (102, 'Kafka on the Shore', 'Haruki Murakami', 'Fiction', 1350);
+INSERT INTO Book_information1 VALUES (103, 'To Kill a Mockingbird', 'Harper Lee', 'Classic', 1100);
+INSERT INTO Book_information1 VALUES (104, 'The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 1250);
+INSERT INTO Book_information1 VALUES (105, 'The Hunger Games', 'Suzanne Collins', 'Dystopian', 1050);
+
+select * from book_information1;
+
+INSERT INTO Book_information1 VALUES (99, 'The Hunger Games', 'Suzanne Collins', 'Dystopian', 100);
+
+
+7////// new table with constraints
+
+
+
+create table Sales1(book_id number(3) check (book_id>=100),sales_id number(3),customer_id number(3) check (customer_id>=399),price number(4) check (price>=800),primary key(sales_id),foreign key(book_id) references Book_information(book_id) on delete cascade);
+
+insert into sales1 values(101,01,401,1200);
+insert into sales1 values(101,02,402,1200);
+insert into sales1 values(102,03,401,1350);
+insert into sales1 values(103,04,403,1100);
+insert into sales1 values(105,05,404,1050);
+insert into sales1 values(103,06,405,1100);
+
+select * from sales1;
+
+insert into sales1 values(103,06,110,1100);
+
+
