@@ -1,0 +1,70 @@
+////////////////////////////////////// 27/01/2023 //////////////////////
+
+
+
+
+
+pl/sql
+
+
+1////////
+
+set serveroutput on
+declare 
+book_id sales.book_id%type;
+sales_id sales.sales_id%type;
+price price.sales%type;
+begin
+select book_id,sales_id,price into book_id,sales_id,price from sales where price=1200;
+dbms_output.put_line('book_id: '||book_id|| ' sales_id: '||sales || ' price: '||price);
+end;
+/
+
+
+/* CURSOR */
+
+
+
+set serveroutput on
+declare 
+cursor sales_cursor is select * from sales;
+sales_row sales%rowtype;
+begin
+open sales_cursor;
+fetch sales_cursor into sales_row.book_id,sales_row.sales_id,sales_row.customer_id,sales_row.price;
+while sales_cursor%found loop
+dbms_output.put_line('book_id: '||sales_row.book_id|| ' sales_id: '||sales_row.sales_id || ' customer_id: ' ||sales_row.customer_id|| ' price: '||sales_row.price);
+dbms_output.put_line('Row count: '|| sales_cursor%rowcount);
+fetch sales_cursor into sales_row.book_id,sales_row.sales_id,sales_row.customer_id,sales_row.price;
+end loop;
+close sales_cursor;
+end;
+/
+
+///// insert
+
+set serveroutput on
+declare 
+book_id sales.book_id%type:=111;
+sales_id sales.sales_id%type:=9;
+cuatomer_id sales.customer_id%type:=411;
+price sales.price%type:=1300;
+begin
+insert into sales values(book_id,sales_id,customer_id,price);
+end;
+/
+
+
+/* ROWTYPE */
+
+
+set serveroutput on
+declare 
+sales_row sales%rowtype;
+begin
+select book_id,sales_id,customer_id,price into sales_row.book_id,sales_row.sales_id,sales_row.customer_id,sales_row.price from sales where sales_id=9;
+dbms_output.put_line('book_id: '||sales_row.book_id|| ' sales_id: '||sales_row.sales_id || ' customer_id: ' ||sales_row.customer_id|| ' price: '||sales_row.price);
+end;
+/
+
+
